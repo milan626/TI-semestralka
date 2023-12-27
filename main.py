@@ -21,13 +21,13 @@ class VSTUP(Enum):
     KONEC_ODPOCTU = 4
 
 class VYSTUP(Enum):
-    MOTOR_NAHORU = "Motor spuštěn a vrata jedou nahoru. "
-    MOTOR_STOP = "Motor zastaven a vrata stojí. "
-    MOTOR_DOLU = "Motor spuštěn a vrata jedou dolu. "
-    CASOVAC_START = "Časovač pro světla spuštěn. "
-    CASOVAC_STOP = "Časovač pro světla zastaven. "
-    ROZSVIT = "Světla rozsvícena. "
-    ZHASNI = "Světla zhasnuta. "
+    MOTOR_NAHORU = "Spusť motor směrem nahoru. "
+    MOTOR_STOP = "Zastav motor. "
+    MOTOR_DOLU = "Spusť motor směrem dolu. "
+    CASOVAC_START = "Spusť časovač. "
+    CASOVAC_STOP = "Zastav časovač. "
+    ROZSVIT = "Rozsviť světla. "
+    ZHASNI = "Zhasni světla. "
 
 def Inic_tab():
     global prech_tab
@@ -109,8 +109,15 @@ def Vstup_znaku():
 
     vstup = ciselnik_vstupu.get(vybrany_index)
 
+    if vyst_tab[stav.value][vstup.value] is None:
+        print("")
+        print("Aktuální stav: ", end='')
+        print(stav)
+        Vstup_znaku()
+
 def Transf_akce():
     global stav
+
     stav = prech_tab[stav.value][vstup.value]
     print("Nový stav: ", end='')
     print(stav)
@@ -118,9 +125,8 @@ def Transf_akce():
 
 
 def Vyst_akce():
-    print("▄▄▄▄▄▄▄")
-    print("" + vyst_tab[stav.value][vstup.value])
-    print("▀▀▀▀▀▀▀")
+    print("")
+    print("VÝSTUP: " + vyst_tab[stav.value][vstup.value])
 
 def main():
     Inic_stav()
@@ -129,15 +135,6 @@ def main():
         Vstup_znaku()
         Vyst_akce()
         Transf_akce()
-
-
-# prech_tab[STAV.DRUHY_STAV][VSTUP.VSTUP_1] = STAV.DRUHY_STAV
-# prech_tab[STAV.DRUHY_STAV][VSTUP.VSTUP_2] = STAV.PRVNI_STAV
-
-# # Výpis přechodové tabulky pro kontrolu
-# for i in range(pocet_stavu):
-#     for j in range(pocet_vstupu):
-#         print(f"prech_tab[{STAV(i)}][{VSTUP(j)}] = {prech_tab[i][j]}")
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
